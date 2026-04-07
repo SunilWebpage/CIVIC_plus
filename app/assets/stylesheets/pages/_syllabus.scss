@@ -23,6 +23,13 @@
   gap: 18px;
 }
 
+.syllabus-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
 .syllabus-highlight-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -42,6 +49,29 @@
   border-radius: vars.$radius-md;
   border: 1px solid rgba(197, 205, 191, 0.9);
   background: rgba(255, 255, 255, 0.8);
+}
+
+.syllabus-filter-chip {
+  padding: 10px 16px;
+  border: 1px solid rgba(160, 171, 153, 0.9);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.syllabus-filter-chip:hover {
+  color: var(--text);
+  border-color: rgba(111, 134, 96, 0.9);
+}
+
+.syllabus-filter-chip-active {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: white;
 }
 
 .syllabus-highlight-label {
@@ -89,5 +119,9 @@
   .syllabus-highlight-grid,
   .syllabus-exam-grid {
     grid-template-columns: 1fr;
+  }
+
+  .syllabus-filter-bar {
+    margin-top: 20px;
   }
 }

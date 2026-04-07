@@ -1,9 +1,23 @@
 class SyllabusesController < ApplicationController
+  FILTERS = [
+    { label: "All", value: "all" },
+    { label: "Banking", value: "banking" },
+    { label: "NEET", value: "neet" },
+    { label: "JEE", value: "jee" },
+    { label: "SSC", value: "ssc" },
+    { label: "UPSC", value: "upsc" },
+    { label: "TNPSC", value: "tnpsc" }
+  ].freeze
+
   def index
-    @syllabus_groups = [
+    @selected_filter = params[:filter].presence_in(FILTERS.map { |filter| filter[:value] }) || "all"
+    @filters = FILTERS
+
+    groups = [
       {
         title: "Banking Exams",
         note: "Core sections for IBPS, SBI PO, SBI Clerk, RBI Assistant, and similar banking recruitment exams.",
+        filters: %w[banking],
         exams: [
           {
             name: "IBPS PO / Clerk",
@@ -22,6 +36,7 @@ class SyllabusesController < ApplicationController
       {
         title: "Medical Entrance",
         note: "High-frequency subjects and units for medical entrance preparation.",
+        filters: %w[neet],
         exams: [
           {
             name: "NEET",
@@ -36,6 +51,7 @@ class SyllabusesController < ApplicationController
       {
         title: "Engineering Entrance",
         note: "Preparation areas for national and state-level engineering entrance exams.",
+        filters: %w[jee],
         exams: [
           {
             name: "JEE Main",
@@ -54,6 +70,7 @@ class SyllabusesController < ApplicationController
       {
         title: "Government Recruitment",
         note: "Common subjects for competitive recruitment exams across central and state government roles.",
+        filters: %w[ssc upsc tnpsc],
         exams: [
           {
             name: "SSC CGL / CHSL",
@@ -70,5 +87,27 @@ class SyllabusesController < ApplicationController
         ]
       }
     ]
+
+    @syllabus_groups =
+      if @selected_filter == "all"
+        groups
+      else
+        groups.filter_map do |group|
+          filtered_exams = group[:exams].select do |exam|
+            exam_filter_match?(group, exam)
+          end
+          next if filtered_exams.empty?
+
+          group.merge(exams: filtered_exams)
+        end
+      end
+  end
+
+  private
+
+  def exam_filter_match?(group, exam)
+    return true if group[:filters].include?(@selected_filter)
+
+    exam[:name].downcase.include?(@selected_filter)
   end
 end

@@ -22,6 +22,12 @@
         <p class="text-note">The page is grouped so you can compare syllabuses across similar exams faster.</p>
       </article>
     </div>
+
+    <div class="syllabus-filter-bar" aria-label="Syllabus filters">
+      <% @filters.each do |filter| %>
+        <%= link_to filter[:label], syllabuses_path(filter: filter[:value]), class: "syllabus-filter-chip #{'syllabus-filter-chip-active' if @selected_filter == filter[:value]}" %>
+      <% end %>
+    </div>
   </section>
 
   <section class="syllabus-group-list">
@@ -47,6 +53,13 @@
             </section>
           <% end %>
         </div>
+      </article>
+    <% end %>
+
+    <% if @syllabus_groups.empty? %>
+      <article class="syllabus-group-card">
+        <div class="section-title">No syllabus found</div>
+        <p class="text-note">Try another filter to view available exam categories.</p>
       </article>
     <% end %>
   </section>
