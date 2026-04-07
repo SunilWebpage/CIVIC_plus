@@ -70,12 +70,19 @@ jobs:
 
     services:
       mysql:
-        image: mysql
+        image: mysql:8.0
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: study_app_test
+          MYSQL_USER: rails
+          MYSQL_PASSWORD: rails_password
+          MYSQL_ROOT_PASSWORD: root_password
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot_password"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
       # redis:
       #   image: valkey/valkey:8
@@ -98,22 +105,30 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: mysql2://127.0.0.1:3306
+          DATABASE_URL: mysql2://rails:rails_password@127.0.0.1:3306/study_app_test
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
 
   system-test:
+    if: ${{ hashFiles('test/system/**/*') != '' }}
     runs-on: ubuntu-latest
 
     services:
       mysql:
-        image: mysql
+        image: mysql:8.0
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: study_app_test
+          MYSQL_USER: rails
+          MYSQL_PASSWORD: rails_password
+          MYSQL_ROOT_PASSWORD: root_password
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot_password"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
       # redis:
       #   image: valkey/valkey:8
@@ -136,7 +151,7 @@ jobs:
       - name: Run System Tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: mysql2://127.0.0.1:3306
+          DATABASE_URL: mysql2://rails:rails_password@127.0.0.1:3306/study_app_test
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test:system
