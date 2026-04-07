@@ -1,0 +1,59 @@
+<% content_for :title, "Sign Up" %>
+
+<main class="auth-page">
+  <section class="auth-card">
+    <div class="auth-copy">
+      <span class="eyebrow">Registration</span>
+      <div class="text-display-lg">Create your study account</div>
+      <p class="auth-text text-body-lg">Pick one plan, create your login, and start using the study app.</p>
+    </div>
+
+    <% if @user.errors.any? %>
+      <div class="auth-errors">
+        <% @user.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= form_with model: @user, url: signup_path, class: "auth-form" do |form| %>
+      <div class="form-group">
+        <%= form.label :email %>
+        <%= form.email_field :email, class: "form-input", placeholder: "name@example.com" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :password %>
+        <%= form.password_field :password, class: "form-input", placeholder: "Minimum 6 characters" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :password_confirmation, "Confirm password" %>
+        <%= form.password_field :password_confirmation, class: "form-input", placeholder: "Repeat your password" %>
+      </div>
+
+      <div class="form-group">
+        <span class="form-label">Choose a plan</span>
+        <div class="plan-options">
+          <label class="plan-option">
+            <%= radio_button_tag :plan, "free", true %>
+            <span>Free</span>
+          </label>
+          <label class="plan-option">
+            <%= radio_button_tag :plan, "advance", false %>
+            <span>Advance</span>
+          </label>
+          <label class="plan-option">
+            <%= radio_button_tag :plan, "pro", false %>
+            <span>Pro</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="auth-actions">
+        <%= form.submit "Create account", class: "button button-primary auth-submit" %>
+        <%= link_to "Already have an account? Login", login_path, class: "auth-link" %>
+      </div>
+    <% end %>
+  </section>
+</main>

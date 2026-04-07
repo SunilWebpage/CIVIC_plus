@@ -1,0 +1,28 @@
+<% content_for :title, "Answer Sheet" %>
+
+<main class="practice-page">
+  <section class="practice-detail-card">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Answer Sheet</span>
+        <div class="page-title"><%= @answer_sheet.exam_practice.title %></div>
+      </div>
+      <div class="practice-actions">
+        <%= link_to "Back to practice", exam_practices_path, class: "button button-secondary" %>
+        <%= link_to "Export PDF", export_answer_sheet_path(@answer_sheet), class: "button button-primary", data: { turbo: false } %>
+      </div>
+    </div>
+
+    <div class="practice-content-grid">
+      <div class="practice-panel">
+        <div class="section-title">Questions</div>
+        <pre class="practice-text-block"><%= @answer_sheet.exam_practice.questions_text %></pre>
+      </div>
+
+      <div class="practice-panel">
+        <div class="section-title">Your answers</div>
+        <pre class="practice-text-block"><%= @answer_sheet.answers_text %></pre>
+      </div>
+    </div>
+  </section>
+</main>

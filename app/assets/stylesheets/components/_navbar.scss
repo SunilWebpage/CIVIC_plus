@@ -1,0 +1,147 @@
+@use "../abstracts/mixins"as *;
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.site-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  background: rgba(255, 253, 250, 0.9);
+  border: 1px solid rgba(217, 209, 197, 0.95);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.site-brand-logo {
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(217, 209, 197, 0.9);
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(31, 42, 36, 0.08);
+}
+
+.site-brand-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.site-brand-copy strong {
+  font-size: 1rem;
+}
+
+.site-brand-copy small {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.site-nav-link {
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.site-nav-link:hover,
+.site-nav-button:hover {
+  transform: translateY(-1px);
+}
+
+.site-nav-link:hover,
+.site-nav-link-active {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+
+.site-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 14px;
+  background: var(--accent-dark);
+  color: #fff;
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.site-nav-button-secondary {
+  border: 0;
+  cursor: pointer;
+  background: var(--surface-soft);
+  color: var(--accent-dark);
+}
+
+.site-user-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+@include mobile {
+  .site-header {
+    padding: 10px 10px 0;
+  }
+
+  .site-navbar {
+    flex-wrap: wrap;
+    padding: 14px;
+  }
+
+  .site-nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .site-nav-actions {
+    margin-left: auto;
+  }
+
+  .site-brand-copy small {
+    display: none;
+  }
+}

@@ -1,0 +1,54 @@
+<section class="practice-detail-card">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Completed</span>
+        <div class="section-title">Completed tests</div>
+      </div>
+      <div class="section-note text-note">See your submitted tests and download the answer sheet PDF whenever you need it.</div>
+    </div>
+
+    <div class="practice-table-shell">
+      <table class="practice-table">
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>Subject</th>
+            <th>Submitted</th>
+            <th>Open</th>
+            <th>Download</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @completed_tests.any? %>
+            <% @completed_tests.each do |answer_sheet| %>
+              <tr>
+                <td><%= answer_sheet.exam_practice.title %></td>
+                <td><%= answer_sheet.exam_practice.subject %></td>
+                <td><%= answer_sheet.submitted_at.strftime("%d %b %Y, %I:%M %p") %></td>
+                <td><%= link_to "View", answer_sheet_path(answer_sheet), class: "text-link" %></td>
+                <td><%= link_to "Download PDF", export_answer_sheet_path(answer_sheet), class: "text-link", data: { turbo: false } %></td>
+                <td>
+                  <%= button_to "Delete", answer_sheet_path(answer_sheet), method: :delete, class: "practice-delete-button",
+                    form: {
+                      data: {
+                        controller: "swal-confirm",
+                        action: "submit->swal-confirm#confirm",
+                        "swal-confirm-title-value": "Delete completed test?",
+                        "swal-confirm-text-value": "This completed test and its answer sheet will be removed.",
+                        "swal-confirm-confirm-button-text-value": "Delete",
+                        "swal-confirm-cancel-button-text-value": "Cancel"
+                      }
+                    } %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="6" class="practice-empty-cell">No completed tests yet.</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>

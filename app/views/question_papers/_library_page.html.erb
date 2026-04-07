@@ -1,0 +1,40 @@
+  <section class="library-section" id="paper-library">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Paper library</span>
+        <div class="text-title-md">Start with the most relevant papers</div>
+      </div>
+      <p class="section-note text-note"><%= @premium_papers %> premium paper<%= "s" unless @premium_papers == 1 %> in the collection.</p>
+    </div>
+
+    <% if @featured_papers.any? %>
+      <div class="paper-grid">
+        <% @featured_papers.each do |paper| %>
+          <article class="paper-card">
+            <div class="paper-card-top">
+              <span class="paper-badge"><%= paper.category %></span>
+              <span class="paper-year"><%= paper.year %></span>
+            </div>
+
+            <div class="text-title-md"><%= paper.title %></div>
+            <p class="paper-meta text-note">
+              <%= paper.is_premium? ? "Premium access" : "Free access" %>
+            </p>
+
+            <div class="paper-card-footer">
+              <% if paper.pdf_url.present? %>
+                <%= link_to "Open PDF", paper.pdf_url, class: "text-link", target: "_blank", rel: "noopener", data: { turbo_frame: "_top" } %>
+              <% else %>
+                <%= link_to "View paper", books_path, class: "text-link", data: { turbo_frame: "_top" } %>
+              <% end %>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state">
+        <div class="text-title-md">No papers found</div>
+        <p class="text-note">Try another category or add question papers to start building the library.</p>
+      </div>
+    <% end %>
+  </section>

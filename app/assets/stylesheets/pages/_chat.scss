@@ -1,0 +1,226 @@
+@use "../abstracts/mixins" as *;
+
+.chat-page {
+  @include page-shell;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.4fr);
+  gap: 24px;
+}
+
+.chat-sidebar,
+.chat-card {
+  @include surface-card;
+  padding: 26px;
+}
+
+.chat-main {
+  display: grid;
+  gap: 24px;
+}
+
+.chat-sidebar-actions {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+
+.chat-create-room-button {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 0.82rem;
+}
+
+.chat-room-list,
+.chat-message-list,
+.chat-share-grid {
+  display: grid;
+}
+
+.chat-room-list {
+  gap: 12px;
+}
+
+.chat-room-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.chat-room-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent-dark);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.chat-room-copy {
+  display: grid;
+  gap: 2px;
+}
+
+.chat-room-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.chat-room-owner,
+.chat-room-topic,
+.chat-room-status {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.chat-card {
+  display: grid;
+  gap: 18px;
+}
+
+.chat-message-list {
+  gap: 12px;
+  min-height: 260px;
+  padding: 18px;
+  border: 1px solid rgba(217, 209, 197, 0.85);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 250, 0.98) 0%, rgba(244, 238, 228, 0.96) 100%);
+}
+
+.chat-message {
+  display: grid;
+  gap: 6px;
+  width: min(100%, 410px);
+  padding: 12px 14px;
+  border: 1px solid rgba(217, 209, 197, 0.8);
+  border-radius: 18px 18px 18px 6px;
+  background: #fffdfa;
+  box-shadow: 0 8px 18px rgba(31, 42, 36, 0.04);
+}
+
+.chat-message-own {
+  justify-self: end;
+  border-radius: 18px 18px 6px 18px;
+  background: #e6efe8;
+}
+
+.chat-message-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+.chat-message-body {
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.chat-message-time {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.chat-compose {
+  margin: 0;
+}
+
+.chat-compose-shell {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(217, 209, 197, 0.85);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.chat-compose-input {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+}
+
+.chat-compose-input:focus {
+  outline: none;
+}
+
+.chat-share-grid {
+  gap: 12px;
+}
+
+.chat-share-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.chat-share-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.chat-share-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.chat-share-subtitle {
+  font-size: 0.7rem;
+}
+
+.chat-share-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-share-actions .text-link,
+.chat-share-actions .button {
+  font-size: 0.78rem;
+}
+
+@include tablet {
+  .chat-page {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include mobile {
+  .chat-page {
+    padding-top: 20px;
+    padding-bottom: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .chat-sidebar,
+  .chat-card {
+    padding: 22px;
+  }
+
+  .chat-room-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  .chat-compose-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-share-actions {
+    flex-wrap: wrap;
+  }
+}

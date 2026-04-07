@@ -1,0 +1,51 @@
+@use "../abstracts/mixins" as *;
+
+.admin-page {
+  @include page-shell;
+  display: grid;
+  gap: 28px;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.admin-card,
+.admin-list-card {
+  @include surface-card;
+  padding: 28px;
+}
+
+.admin-form {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+
+@include tablet {
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include mobile {
+  .admin-page {
+    padding-top: 20px;
+    padding-bottom: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .admin-card,
+  .admin-list-card {
+    padding: 22px;
+  }
+}

@@ -1,0 +1,18 @@
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/bindex-0.8.1/ext/skiptrace
+/usr/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20260331-1289059-c07lli sitelibdir\=./.gem.20260331-1289059-c07lli clean
+
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20260331-1289059-c07lli sitelibdir\=./.gem.20260331-1289059-c07lli
+compiling cruby.c
+linking shared-object skiptrace/internal/cruby.so
+
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20260331-1289059-c07lli sitelibdir\=./.gem.20260331-1289059-c07lli install
+/usr/bin/install -c -m 0755 cruby.so ./.gem.20260331-1289059-c07lli/skiptrace/internal
+
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/bindex-0.8.1/ext/skiptrace
+make DESTDIR\= sitearchdir\=./.gem.20260331-1289059-c07lli sitelibdir\=./.gem.20260331-1289059-c07lli clean

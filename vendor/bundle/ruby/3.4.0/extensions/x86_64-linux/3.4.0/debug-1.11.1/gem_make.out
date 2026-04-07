@@ -1,0 +1,19 @@
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/debug-1.11.1/ext/debug
+/usr/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/debug-1.11.1/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20260331-1289059-5eqvzn sitelibdir\=./.gem.20260331-1289059-5eqvzn clean
+
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/debug-1.11.1/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20260331-1289059-5eqvzn sitelibdir\=./.gem.20260331-1289059-5eqvzn
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.so
+
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/debug-1.11.1/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20260331-1289059-5eqvzn sitelibdir\=./.gem.20260331-1289059-5eqvzn install
+/usr/bin/install -c -m 0755 debug.so ./.gem.20260331-1289059-5eqvzn/debug
+
+current directory: /home/sunilraja/personal_project/study_app/vendor/bundle/ruby/3.4.0/gems/debug-1.11.1/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20260331-1289059-5eqvzn sitelibdir\=./.gem.20260331-1289059-5eqvzn clean

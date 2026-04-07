@@ -1,0 +1,55 @@
+<% content_for :title, "Study App" %>
+
+<main class="home-page">
+  <section class="hero-section">
+    <div class="hero-copy">
+      <span class="eyebrow">Study smarter</span>
+      <div class="text-display-xl">Your study materials, all in one simple space.</div>
+      <p class="hero-text text-body-lg">
+        Find previous year question papers, sort by exam category, and keep your preparation focused.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#paper-library" class="button button-primary">Browse papers</a>
+        <%= link_to "All categories", question_papers_path, class: "button button-secondary" %>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <strong><%= @total_papers %>+</strong>
+          <span>Papers available</span>
+        </article>
+        <article class="stat-card">
+          <strong><%= @categories.size %></strong>
+          <span>Exam categories</span>
+        </article>
+        <article class="stat-card">
+          <strong><%= @latest_year || "New" %></strong>
+          <span>Latest collection</span>
+        </article>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="hero-panel-card">
+        <div class="hero-panel-logo-wrap">
+          <%= image_tag "app_logo_home.png", alt: "CIVIC+ logo", class: "hero-panel-logo" %>
+        </div>
+        <p class="hero-panel-label text-label">Preparation overview</p>
+        <div class="text-title-md">Keep exam practice neat and easy to access.</div>
+        <ul class="hero-checklist">
+          <li>Previous year papers by category</li>
+          <li>Premium and free papers clearly marked</li>
+          <li>Clean reading layout for daily practice</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <%= turbo_frame_tag "paper_library_panel" do %>
+    <%= render "question_papers/quick_filter" %>
+    <%= render "question_papers/library_page" %>
+  <% end %>
+
+  <%= render "question_papers/auth_gate" unless logged_in? %>
+</main>

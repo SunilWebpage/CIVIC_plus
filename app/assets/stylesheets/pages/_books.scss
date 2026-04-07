@@ -1,0 +1,101 @@
+@use "../abstracts/mixins" as *;
+@use "../abstracts/variables" as vars;
+
+.books-page {
+  @include page-shell;
+  display: grid;
+  gap: 28px;
+}
+
+.books-hero {
+  padding: 30px;
+  background: rgba(255, 252, 247, 0.7);
+  border: 1px solid rgba(217, 209, 197, 0.7);
+  border-radius: vars.$radius-lg;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.section-note {
+  font-size: 1rem;
+}
+
+.books-table-shell {
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid var(--line);
+  border-radius: vars.$radius-md;
+  background: var(--surface);
+}
+
+.books-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.books-table th,
+.books-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.books-table td {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.table-pdf-link {
+  color: var(--accent-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.table-pdf-link:hover {
+  color: var(--text);
+}
+
+.books-table thead th {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-size: 0.95rem;
+}
+
+.books-table tbody th {
+  min-width: 92px;
+}
+
+.books-table tbody tr:last-child th,
+.books-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.question-papers-table tbody td {
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+@include mobile {
+  .books-page {
+    padding-top: 20px;
+    padding-bottom: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .books-hero {
+    padding: 22px;
+  }
+
+  .section-heading {
+    flex-direction: column;
+    align-items: start;
+  }
+}

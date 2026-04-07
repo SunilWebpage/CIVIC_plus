@@ -1,0 +1,267 @@
+@use "../abstracts/mixins"as *;
+@use "../abstracts/variables"as vars;
+
+.home-page {
+  @include page-shell;
+}
+
+.hero-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.hero-copy,
+.hero-panel-card,
+.paper-card,
+.stat-card,
+.empty-state {
+  @include surface-card;
+}
+
+.hero-copy {
+  padding: 48px;
+}
+
+.hero-copy {
+  order: 1;
+}
+
+.eyebrow {
+  margin-bottom: 18px;
+}
+
+.hero-text,
+.paper-meta,
+.hero-checklist,
+.empty-state p {
+  color: var(--muted);
+}
+
+.hero-text {
+  max-width: 600px;
+  margin-top: 18px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: vars.$radius-md;
+  font-weight: 700;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.button:hover,
+.chip:hover {
+  transform: translateY(-1px);
+}
+
+.button-primary {
+  background: var(--accent-dark);
+  color: #fff;
+}
+
+.button-secondary {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.stat-card {
+  padding: 18px;
+}
+
+.stat-card strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1.5rem;
+}
+
+.stat-card span {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.hero-panel {
+  display: flex;
+  order: 2;
+}
+
+.hero-panel-card {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  padding: 32px;
+}
+
+.hero-panel-logo-wrap {
+  display: flex;
+  justify-content: stretch;
+}
+
+.hero-panel-logo {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 26px;
+  border: 1px solid rgba(217, 209, 197, 0.9);
+  box-shadow: 0 16px 28px rgba(31, 42, 36, 0.08);
+}
+
+.hero-panel-label {
+  margin: 0;
+  color: var(--accent-dark);
+}
+
+.hero-checklist {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.8;
+}
+
+.category-section,
+.library-section {
+  margin-top: 28px;
+  padding: 30px;
+  background: rgba(255, 252, 247, 0.7);
+  border: 1px solid rgba(217, 209, 197, 0.7);
+  border-radius: vars.$radius-lg;
+}
+
+.category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.chip-active {
+  border-color: var(--accent-dark);
+  background: var(--accent-dark);
+  color: #fff;
+}
+
+.paper-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.paper-card {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.paper-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.paper-card .text-title-md {
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.25;
+}
+
+.paper-meta {
+  margin: 0;
+}
+
+.paper-card-footer {
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.empty-state {
+  padding: 36px;
+  text-align: center;
+}
+
+.empty-state h3 {
+  margin: 0 0 12px;
+}
+
+@include tablet {
+
+  .hero-section,
+  .paper-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy {
+    order: 1;
+  }
+
+  .hero-panel {
+    order: 2;
+  }
+}
+
+@include mobile {
+  .home-page {
+    padding-top: 20px;
+    padding-bottom: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .hero-copy,
+  .hero-panel-card,
+  .category-section,
+  .library-section {
+    padding: 22px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .text-display-xl {
+    font-size: 2.4rem;
+  }
+}
+
+
+
+.swal2-icon.swal2-warning.swal2-icon-show {
+  display: none !important;
+}
+
+
+.swal2-popup.swal2-modal.swal2-icon-warning.swal2-show {
+  border-radius: 10px !important;
+}

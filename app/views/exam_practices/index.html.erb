@@ -1,0 +1,30 @@
+<% content_for :title, "Exam Practice" %>
+
+<main class="practice-page books-page">
+  <section class="practice-hero">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Practice</span>
+        <div class="page-title">Test and exam practice</div>
+      </div>
+      <div class="section-note text-note">Open a practice paper, write your answers, and export the answer sheet as PDF.</div>
+    </div>
+
+    <div class="practice-grid">
+      <% @exam_practices.each do |exam| %>
+        <article class="practice-card">
+          <div class="practice-card-top">
+            <span class="paper-badge"><%= exam.subject %></span>
+            <span class="paper-year"><%= exam.exam_type %></span>
+          </div>
+          <div class="text-title-md"><%= exam.title %></div>
+          <p class="text-note"><%= exam.duration_minutes %> mins • <%= exam.total_marks %> marks</p>
+          <%= link_to "Start practice", exam_practice_path(exam), class: "button button-primary" %>
+        </article>
+      <% end %>
+    </div>
+  </section>
+
+  <%= render "exam_practices/completed_test" %>
+</main>
+ 

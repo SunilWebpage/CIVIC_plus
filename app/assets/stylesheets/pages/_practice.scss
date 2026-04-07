@@ -1,0 +1,163 @@
+@use "../abstracts/mixins" as *;
+
+.practice-page {
+  @include page-shell;
+}
+
+.practice-hero,
+.practice-detail-card {
+  @include surface-card;
+  padding: 28px;
+}
+
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.practice-hero .section-heading,
+.practice-detail-card .section-heading {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.practice-hero .section-note,
+.practice-detail-card .section-note {
+  max-width: 680px;
+  text-align: left;
+}
+
+.practice-card,
+.practice-panel {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.practice-card-top,
+.practice-actions,
+.practice-content-grid {
+  display: flex;
+  gap: 12px;
+}
+
+.practice-card-top,
+.practice-actions {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.practice-content-grid {
+  align-items: start;
+  margin-top: 24px;
+}
+
+.practice-content-grid > * {
+  flex: 1;
+}
+
+.practice-form {
+  display: grid;
+  gap: 16px;
+}
+
+.practice-answer-input {
+  min-height: 320px;
+  padding: 14px;
+  resize: vertical;
+}
+
+.practice-text-block {
+  margin: 0;
+  padding: 16px;
+  border-radius: 16px;
+  background: #f7f2ea;
+  border: 1px solid rgba(217, 209, 197, 0.8);
+  white-space: pre-wrap;
+  font-family: var(--font-table);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.practice-table-shell {
+  overflow-x: auto;
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.practice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.practice-table th,
+.practice-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(217, 209, 197, 0.8);
+  text-align: left;
+}
+
+.practice-table th {
+  font-size: 0.84rem;
+  color: var(--accent-dark);
+  background: rgba(221, 232, 223, 0.58);
+}
+
+.practice-table td {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.practice-delete-button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #f5d9d3;
+  color: #8b3a2d;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.practice-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.practice-empty-cell {
+  text-align: center;
+}
+
+@include tablet {
+  .practice-grid,
+  .practice-content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+@include mobile {
+  .practice-page {
+    padding-top: 20px;
+    padding-bottom: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .practice-hero,
+  .practice-detail-card {
+    padding: 22px;
+  }
+
+  .practice-actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}

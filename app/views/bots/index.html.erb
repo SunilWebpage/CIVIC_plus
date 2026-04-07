@@ -1,0 +1,55 @@
+<% content_for :title, "Study Bot" %>
+
+<main class="bot-page" data-controller="chatbot">
+  <section class="bot-sidebar">
+    <div class="section-heading flex-col">
+      <div>
+        <span class="eyebrow">Study Bot</span>
+        <div class="page-title">Ask questions and solve problems</div>
+      </div>
+      <div class="text-note">Use the bot for study guidance, revision help, and hard questions.</div>
+    </div>
+
+    <div class="bot-suggestion-list">
+      <% @suggestions.each do |suggestion| %>
+        <button
+          type="button"
+          class="bot-suggestion-card"
+          data-action="click->chatbot#useSuggestion"
+          data-question="<%= suggestion %>">
+          <span class="bot-suggestion-label">Try</span>
+          <span class="bot-suggestion-text"><%= suggestion %></span>
+        </button>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="bot-main">
+    <div class="bot-card">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Assistant</span>
+          <div class="section-title">Study chatbot</div>
+        </div>
+      </div>
+
+      <div class="bot-messages" data-chatbot-target="messages">
+        <article class="bot-message">
+          <div class="bot-message-name">Study Bot</div>
+          <p class="bot-message-body">Ask me a question about maths, science, social, Tamil, revision, or difficult exam questions.</p>
+        </article>
+      </div>
+
+      <form class="bot-compose" data-action="submit->chatbot#ask">
+        <div class="bot-compose-shell">
+          <input
+            type="text"
+            class="form-input bot-compose-input"
+            placeholder="Ask your question here"
+            data-chatbot-target="input" />
+          <button type="submit" class="button button-primary">Ask bot</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>

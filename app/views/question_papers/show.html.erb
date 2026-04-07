@@ -1,0 +1,38 @@
+<% content_for :title, @paper.title %>
+
+<main class="paper-show-page">
+  <section class="paper-show-card">
+    <%= link_to "Back to home", question_papers_path, class: "back-link" %>
+
+    <div class="paper-show-header">
+      <span class="paper-badge"><%= @paper.category %></span>
+      <span class="paper-year"><%= @paper.year %></span>
+    </div>
+
+    <div class="text-display-lg"><%= @paper.title %></div>
+    <p class="paper-description text-body">
+      Use this paper to revise concepts, improve speed, and make your preparation more exam-focused.
+    </p>
+
+    <% if @paper.pdf_url.present? %>
+      <p>
+        <%= link_to "Open PDF", @paper.pdf_url, class: "text-link", target: "_blank", rel: "noopener" %>
+      </p>
+    <% end %>
+
+    <div class="paper-info-grid">
+      <article class="info-card">
+        <span class="info-label">Access</span>
+        <strong><%= @paper.is_premium? ? "Premium" : "Free" %></strong>
+      </article>
+      <article class="info-card">
+        <span class="info-label">Category</span>
+        <strong><%= @paper.category %></strong>
+      </article>
+      <article class="info-card">
+        <span class="info-label">Year</span>
+        <strong><%= @paper.year %></strong>
+      </article>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,94 @@
+<% content_for :title, "Chat" %>
+
+<main class="chat-page">
+  <section class="chat-sidebar">
+    <div class="section-heading flex-col">
+      <div>
+        <span class="eyebrow">Rooms</span>
+        <div class="page-title">Join rooms and share questions</div>
+      </div>
+      <div class="chat-sidebar-actions">
+  
+        <div class="text-note">Rooms created by your friends for quick question sharing.</div>
+         <button type="button" class="button button-primary chat-create-room-button">Create room</button>
+      </div>
+    </div>
+
+    <div class="chat-room-list">
+      <% @rooms.each do |room| %>
+        <article class="chat-room-card">  
+          <div class="chat-room-avatar"><%= room[:name].first %></div>
+          <div class="chat-room-copy">
+            <div class="chat-room-name"><%= room[:name] %></div>
+            <div class="chat-room-owner">Created by <%= room[:owner] %></div>
+            <p class="chat-room-topic text-note"><%= room[:topic] %></p>
+          </div>
+          <span class="chat-room-status"><%= room[:status] %></span>
+        </article>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="chat-main">
+    <div class="chat-card">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Conversation</span>
+          <div class="section-title">Room conversation</div>
+        </div>
+      </div>
+
+      <div class="chat-message-list">
+        <% @messages.each do |message| %>
+          <article class="chat-message <%= "chat-message-own" if message[:own] %>">
+            <div class="chat-message-name"><%= message[:sender] %></div>
+            <p class="chat-message-body text-body"><%= message[:body] %></p>
+            <span class="chat-message-time"><%= message[:time] %></span>
+          </article>
+        <% end %>
+      </div>
+
+      <form class="chat-compose" action="#" method="get">
+        <div class="chat-compose-shell">
+          <input type="text" class="form-input chat-compose-input" placeholder="Type a message to your friend" />
+          <button type="button" class="button button-primary">Send</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="chat-card">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Share Questions</span>
+          <div class="section-title">Send question papers to friends</div>
+        </div>
+        <div class="section-note text-note">Tap share to send a paper link or copy it.</div>
+      </div>
+
+      <div class="chat-share-grid">
+        <% @share_items.each do |item| %>
+          <article class="chat-share-card">
+            <div class="chat-share-copy">
+              <div class="chat-share-title"><%= item[:title] %></div>
+              <p class="chat-share-subtitle text-note"><%= item[:subtitle] %></p>
+            </div>
+
+            <div class="chat-share-actions">
+              <%= link_to "Open", item[:url], class: "text-link", data: { turbo_frame: "_top" }, target: item[:url].start_with?("http") ? "_blank" : nil, rel: item[:url].start_with?("http") ? "noopener" : nil %>
+              <button
+                type="button"
+                class="button button-secondary"
+                data-controller="share"
+                data-action="click->share#share"
+                data-share-title-value="<%= item[:title] %>"
+                data-share-text-value="Study question shared from Study App"
+                data-share-url-value="<%= item[:url] %>">
+                Share
+              </button>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>

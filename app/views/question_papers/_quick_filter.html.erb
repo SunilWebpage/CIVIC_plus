@@ -1,0 +1,20 @@
+  <section class="category-section">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Quick filters</span>
+        <div class="text-title-md">Choose your exam track</div>
+      </div>
+      <% if @selected_category %>
+        <p class="section-note text-note">Showing papers for <strong><%= @selected_category %></strong>.</p>
+      <% else %>
+        <p class="section-note text-note">Pick a category to narrow your study list.</p>
+      <% end %>
+    </div>
+
+    <div class="category-chips">
+      <%= link_to "All", question_papers_path, class: "chip #{'chip-active' unless @selected_category}", data: { turbo_frame: "paper_library_panel" } %>
+      <% @categories.each do |category| %>
+        <%= link_to category, question_papers_path(category: category), class: "chip #{'chip-active' if @selected_category == category}", data: { turbo_frame: "paper_library_panel" } %>
+      <% end %>
+    </div>
+  </section>

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cleanup() {
+  kill "${rails_pid:-0}" "${sass_pid:-0}" 2>/dev/null || true
+}
+
+trap cleanup EXIT INT TERM
+
+./bin/rails server "$@" &
+rails_pid=$!
+
+./bin/rails dartsass:watch &
+sass_pid=$!
+
+wait -n "$rails_pid" "$sass_pid"

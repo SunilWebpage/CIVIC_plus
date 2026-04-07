@@ -1,0 +1,171 @@
+<% content_for :title, "Admin Library" %>
+
+<main class="admin-page">
+  <section class="admin-grid">
+    <div class="admin-card">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Admin</span>
+          <div class="page-title">Add Book PDF</div>
+        </div>
+      </div>
+
+      <% if @book.errors.any? %>
+        <div class="auth-errors">
+          <% @book.errors.full_messages.each do |message| %>
+            <p><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= form_with model: @book, url: create_book_admin_library_index_path, class: "admin-form" do |form| %>
+        <div class="form-group">
+          <%= form.label :title %>
+          <%= form.text_field :title, class: "form-input", placeholder: "Class 6 Tamil Book" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :standard, "Class" %>
+          <%= form.select :standard, Book::STANDARDS.map { |standard| [ "Std #{standard}", standard ] }, {}, class: "form-input" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :subject %>
+          <%= form.select :subject, Book::SUBJECTS, {}, class: "form-input" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :pdf_url, "PDF path or URL" %>
+          <%= form.text_field :pdf_url, class: "form-input", placeholder: "/pdfs/class-6-tamil-book.pdf" %>
+        </div>
+
+        <%= form.submit "Add book PDF", class: "button button-primary auth-submit" %>
+      <% end %>
+    </div>
+
+    <div class="admin-card">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Admin</span>
+          <div class="page-title">Add Question Paper PDF</div>
+        </div>
+        
+      </div>
+
+      <% if @question_paper.errors.any? %>
+        <div class="auth-errors">
+          <% @question_paper.errors.full_messages.each do |message| %>
+            <p><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= form_with model: @question_paper, url: create_question_paper_admin_library_index_path, class: "admin-form" do |form| %>
+        <div class="form-group">
+          <%= form.label :title %>
+          <%= form.text_field :title, class: "form-input", placeholder: "Class 6 Tamil Book Back Question Paper" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :category %>
+          <%= form.text_field :category, class: "form-input", placeholder: "Tamil" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :year %>
+          <%= form.number_field :year, class: "form-input", placeholder: "2026" %>
+        </div>
+
+        <div class="form-group">
+          <label class="admin-checkbox">
+            <%= form.check_box :is_premium %>
+            <span>Premium paper</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :pdf_url, "PDF path or URL" %>
+          <%= form.text_field :pdf_url, class: "form-input", placeholder: "/pdfs/class-6-tamil-book-back.pdf" %>
+        </div>
+
+        <%= form.submit "Add question paper PDF", class: "button button-primary auth-submit" %>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="admin-list-card">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Books</span>
+        <div class="section-title">Current book entries</div>
+      </div>
+    </div>
+
+    <div class="books-table-shell">
+      <table class="books-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <th>Subject</th>
+            <th>Title</th>
+            <th>PDF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @books.each do |book| %>
+            <tr>
+              <td>Std <%= book.standard %></td>
+              <td><%= book.subject %></td>
+              <td><%= book.title %></td>
+              <td>
+                <% if book.pdf_url.present? %>
+                  <%= link_to "Open PDF", book.pdf_url, class: "table-pdf-link", target: "_blank", rel: "noopener" %>
+                <% else %>
+                  -
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="admin-list-card">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Question Papers</span>
+        <div class="section-title">Current question paper entries</div>
+      </div>
+    </div>
+
+    <div class="books-table-shell">
+      <table class="books-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Year</th>
+            <th>Title</th>
+            <th>PDF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @question_papers.each do |paper| %>
+            <tr>
+              <td><%= paper.category %></td>
+              <td><%= paper.year %></td>
+              <td><%= paper.title %></td>
+              <td>
+                <% if paper.pdf_url.present? %>
+                  <%= link_to "Open PDF", paper.pdf_url, class: "table-pdf-link", target: "_blank", rel: "noopener" %>
+                <% else %>
+                  -
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>

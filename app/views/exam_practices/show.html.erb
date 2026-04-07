@@ -1,0 +1,46 @@
+<% content_for :title, @exam_practice.title %>
+
+<main class="practice-page">
+  <section class="practice-detail-card">
+    <%= link_to "Back to practice", exam_practices_path, class: "back-link" %>
+
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Exam Practice</span>
+        <div class="page-title"><%= @exam_practice.title %></div>
+      </div>
+      <div class="section-note text-note"><%= @exam_practice.subject %> • <%= @exam_practice.exam_type %> • <%= @exam_practice.duration_minutes %> mins</div>
+    </div>
+
+    <div class="practice-content-grid">
+      <div class="practice-panel">
+        <div class="section-title">Questions</div>
+        <% if @exam_practice.instructions.present? %>
+          <p class="text-note"><%= @exam_practice.instructions %></p>
+        <% end %>
+        <pre class="practice-text-block"><%= @exam_practice.questions_text %></pre>
+      </div>
+
+      <div class="practice-panel">
+        <div class="section-title">Write Answer Sheet</div>
+
+        <% if @answer_sheet.errors.any? %>
+          <div class="auth-errors">
+            <% @answer_sheet.errors.full_messages.each do |message| %>
+              <p><%= message %></p>
+            <% end %>
+          </div>
+        <% end %>
+
+        <%= form_with model: [ @exam_practice, @answer_sheet ], class: "practice-form" do |form| %>
+          <div class="form-group">
+            <%= form.label :answers_text, "Your answers" %>
+            <%= form.text_area :answers_text, class: "form-input practice-answer-input", rows: 18, placeholder: "Write each answer clearly. Example: 1. ... 2. ..." %>
+          </div>
+
+          <%= form.submit "Submit answer sheet", class: "button button-primary auth-submit" %>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>

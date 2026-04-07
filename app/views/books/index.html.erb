@@ -1,0 +1,77 @@
+<% content_for :title, "Book Library" %>
+
+<main class="books-page">
+  <section class="books-hero">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Library</span>
+        <div class="page-title">Books for standards 6 to 12</div>
+      </div>
+      <div class="section-note text-note">Tamil, Science, Social, and Maths in one place.</div>
+    </div>
+
+    <div class="books-table-shell">
+      <table class="books-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <% @subjects.each do |subject| %>
+              <th><%= subject %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% Book::STANDARDS.each do |standard| %>
+            <% books = @books_by_standard.fetch(standard, []).index_by(&:subject) %>
+            <tr>
+              <th scope="row">Std <%= standard %></th>
+              <% @subjects.each do |subject| %>
+                <% book = books[subject] %>
+                <td>
+                  <% if book&.pdf_url.present? %>
+                    <%= link_to book.title, book.pdf_url, class: "table-pdf-link", target: "_blank", rel: "noopener" %>
+                  <% else %>
+                    <%= book&.title || "-" %>
+                  <% end %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="books-hero">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Question Papers</span>
+        <div class="section-title">Book back question papers for all subjects</div>
+      </div>
+      <div class="section-note text-note">Question paper list for standards 6 to 12.</div>
+    </div>
+
+    <div class="books-table-shell">
+      <table class="books-table question-papers-table">
+        <thead>
+          <tr>
+            <th>Class</th>
+            <% @subjects.each do |subject| %>
+              <th><%= subject %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% Book::STANDARDS.each do |standard| %>
+            <tr>
+              <th scope="row">Std <%= standard %></th>
+              <% @subjects.each do |subject| %>
+                <td><%= @question_papers_by_standard.fetch(standard).fetch(subject) %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>

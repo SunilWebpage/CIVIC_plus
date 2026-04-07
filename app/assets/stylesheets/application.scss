@@ -1,0 +1,13 @@
+@use "abstracts/variables";
+@use "abstracts/mixins";
+@use "base/globals";
+@use "components/navbar";
+@use "utilities/utils";
+@use "pages/auth";
+@use "pages/admin";
+@use "pages/bot";
+@use "pages/books";
+@use "pages/chat";
+@use "pages/home";
+@use "pages/practice";
+@use "pages/question-paper-show";
