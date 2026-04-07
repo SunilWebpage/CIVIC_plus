@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_07_121000) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_07_142000) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -60,6 +60,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_07_121000) do
     t.index ["standard", "subject"], name: "index_books_on_standard_and_subject", unique: true
   end
 
+  create_table "chat_messages", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.text "body", null: false
+    t.bigint "conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["conversation_id"], name: "index_chat_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_chat_messages_on_user_id"
+  end
+
+  create_table "conversations", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "recipient_id", null: false
+    t.bigint "sender_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_id"], name: "index_conversations_on_recipient_id"
+    t.index ["sender_id", "recipient_id"], name: "index_conversations_on_sender_id_and_recipient_id", unique: true
+    t.index ["sender_id"], name: "index_conversations_on_sender_id"
+  end
+
   create_table "exam_practices", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "duration_minutes", null: false
@@ -82,12 +102,35 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_07_121000) do
     t.integer "year"
   end
 
+  create_table "room_memberships", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "display_name"
+    t.bigint "room_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["display_name"], name: "index_room_memberships_on_display_name"
+    t.index ["room_id", "user_id"], name: "index_room_memberships_on_room_id_and_user_id", unique: true
+    t.index ["room_id"], name: "index_room_memberships_on_room_id"
+    t.index ["user_id"], name: "index_room_memberships_on_user_id"
+  end
+
+  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.bigint "admin_id", null: false
+    t.datetime "created_at", null: false
+    t.string "display_name"
+    t.string "name", null: false
+    t.string "password_digest", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_rooms_on_admin_id"
+    t.index ["display_name"], name: "index_rooms_on_display_name"
+    t.index ["name"], name: "index_rooms_on_name", unique: true
+  end
+
   create_table "syllabuses", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "category", null: false
     t.datetime "created_at", null: false
     t.text "description"
     t.string "exam_name", null: false
-    t.string "pdf_url", null: false
     t.string "title", null: false
     t.datetime "updated_at", null: false
     t.index ["category", "exam_name"], name: "index_syllabuses_on_category_and_exam_name", unique: true
@@ -97,11 +140,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_07_121000) do
     t.boolean "admin", default: false, null: false
     t.boolean "advance", default: false, null: false
     t.datetime "created_at", null: false
+    t.string "display_name"
     t.string "email", null: false
     t.boolean "free", default: true, null: false
     t.string "password_digest", null: false
     t.boolean "pro", default: false, null: false
     t.datetime "updated_at", null: false
+    t.index ["display_name"], name: "index_users_on_display_name"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
@@ -109,4 +154,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_07_121000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answer_sheets", "exam_practices"
   add_foreign_key "answer_sheets", "users"
+  add_foreign_key "chat_messages", "conversations"
+  add_foreign_key "chat_messages", "users"
+  add_foreign_key "conversations", "users", column: "recipient_id"
+  add_foreign_key "conversations", "users", column: "sender_id"
+  add_foreign_key "room_memberships", "rooms"
+  add_foreign_key "room_memberships", "users"
+  add_foreign_key "rooms", "users", column: "admin_id"
 end

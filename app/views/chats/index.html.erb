@@ -5,55 +5,161 @@
     <div class="section-heading flex-col">
       <div>
         <span class="eyebrow">Rooms</span>
-        <div class="page-title">Join rooms and share questions</div>
+        <div class="page-title">Create or join a room</div>
       </div>
       <div class="chat-sidebar-actions">
-  
-        <div class="text-note">Rooms created by your friends for quick question sharing.</div>
-         <button type="button" class="button button-primary chat-create-room-button">Create room</button>
+        <div class="text-note">Rooms store the room admin, room users, and a password for joining.</div>
+        <div
+          class="chat-room-action-row"
+          data-controller="chat-room-modal"
+          data-chat-room-modal-create-url-value="<%= create_room_chats_path %>"
+          data-chat-room-modal-join-url-value="<%= join_room_chats_path %>">
+          <button
+            type="button"
+            class="button button-primary chat-create-room-button"
+            data-action="click->chat-room-modal#open"
+            data-chat-room-modal-type-value="create">
+            Create room
+          </button>
+          <button
+            type="button"
+            class="button button-secondary chat-create-room-button"
+            data-action="click->chat-room-modal#open"
+            data-chat-room-modal-type-value="join">
+            Join room
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="chat-room-list">
-      <% @rooms.each do |room| %>
-        <article class="chat-room-card">  
-          <div class="chat-room-avatar"><%= room[:name].first %></div>
-          <div class="chat-room-copy">
-            <div class="chat-room-name"><%= room[:name] %></div>
-            <div class="chat-room-owner">Created by <%= room[:owner] %></div>
-            <p class="chat-room-topic text-note"><%= room[:topic] %></p>
+
+    <% if @joined_rooms.any? %>
+      <% if current_user.admin_rooms.exists? %>
+        <div class="section-heading flex-col">
+          <div>
+            <div class="section-title">Your room list</div>
           </div>
-          <span class="chat-room-status"><%= room[:status] %></span>
-        </article>
+        </div>
       <% end %>
-    </div>
+
+      <div class="chat-room-list">
+        <% @joined_rooms.each do |room| %>
+          <div class="chat-room-block">
+            <% if room.admin == current_user %>
+              <article class="chat-room-card">
+                <div class="chat-room-avatar"><%= room.name.first.upcase %></div>
+                <div class="chat-room-copy">
+                  <div class="chat-room-name"><%= room.name %></div>
+                  <div class="chat-room-owner">Admin: <%= room.admin.email %></div>
+                  <p class="chat-room-topic text-note"><%= pluralize(room.users.count, "user") %> in this room</p>
+                </div>
+                <span class="chat-room-status">Joined</span>
+                <%= button_to destroy_room_chats_path(room_id: room.id), method: :delete, class: "text-link chat-room-delete", data: { confirm: "Delete this room?" } do %>
+                  Delete
+                <% end %>
+              </article>
+            <% end %>
+            <div class="chat-room-members-shell">
+              <div class="chat-room-members-head">Room members</div>
+              <% room.room_memberships.each do |membership| %>
+                <% display_name = membership.display_name.presence || membership.user.email %>
+                <div class="chat-room-member<%= " chat-room-member-self" if membership.user == current_user %>">
+                  <span><%= display_name %><% if membership.user == current_user %>(You)<% end %></span>
+                </div>
+              <% end %>
+            </div>  
+          </div>
+        <% end %>
+      </div>
+
+
+      
+    <% end %>
+
+
+
+
+    <% if @show_direct_messages %>
+      <div class="chat-room-list">
+        <% @room_users.each do |user| %>
+          <% conversation = Conversation.between(current_user, user) %>
+          <div class="chat-room-card chat-user-row">
+            <button
+              type="button"
+              class="flex-grow chat-room-card-button"
+              data-controller="chat-user"
+              data-action="click->chat-user#open"
+              data-chat-user-id-value="<%= user.id %>"
+              data-chat-user-email-value="<%= user.email %>"
+              data-chat-user-create-url-value="<%= chats_path %>">
+              <div class="chat-room-avatar"><%= user.email.first.upcase %></div>
+              <div class="chat-room-copy">
+                <div class="chat-room-name"><%= user.email %></div>
+                <div class="chat-room-owner">Direct message</div>
+              </div>
+              <span class="chat-room-status">Open</span>
+            </button>
+            <% if conversation %>
+              <%= button_to destroy_conversation_chats_path(conversation_id: conversation.id), method: :delete, class: "chat-room-delete chat-user-delete", data: { confirm: "Delete this conversation?" } do %>
+                Delete
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-note">Join a room to chat with its members directly.</div>
+    <% end %>
   </section>
 
   <section class="chat-main">
     <div class="chat-card">
-      <div class="section-heading">
+      <div class="section-heading chat-conversation-heading">
         <div>
           <span class="eyebrow">Conversation</span>
-          <div class="section-title">Room conversation</div>
+          <div class="section-title chat-conversation-title">
+            <span class="chat-conversation-label">Chatting with</span>
+            <span class="chat-conversation-user"><%= display_name_for_user(@selected_conversation&.other_user(current_user)) || "Choose a user" %></span>
+          </div>
         </div>
+        <% if @selected_conversation %>
+          <%= button_to destroy_conversation_chats_path(conversation_id: @selected_conversation.id), method: :delete, class: "text-link chat-room-delete", data: { confirm: "Delete this conversation for both users?" } do %>
+            Delete chat
+          <% end %>
+        <% end %>
       </div>
 
       <div class="chat-message-list">
-        <% @messages.each do |message| %>
-          <article class="chat-message <%= "chat-message-own" if message[:own] %>">
-            <div class="chat-message-name"><%= message[:sender] %></div>
-            <p class="chat-message-body text-body"><%= message[:body] %></p>
-            <span class="chat-message-time"><%= message[:time] %></span>
+        <% if @messages.any? %>
+          <% @messages.each do |message| %>
+          <article class="chat-message <%= "chat-message-own" if message.user == current_user %>">
+            <div class="chat-message-name-row">
+              <span class="chat-message-name"><%= message.user == current_user ? "You" : message.user.email %></span>
+              <span class="chat-message-time"><%= message.created_at.strftime("%d %b %Y, %I:%M %p") %></span>
+            </div>
+            <p class="chat-message-body text-body"><%= message.body %></p>
+          </article>
+          <% end %>
+        <% else %>
+          <article class="chat-message">
+            <div class="chat-message-name-row">
+              <span class="chat-message-name">Study App</span>
+              <span class="chat-message-time"><%= Time.current.strftime("%d %b %Y, %I:%M %p") %></span>
+            </div>
+            <p class="chat-message-body text-body">Select a user from the left and start a one-to-one chat.</p>
           </article>
         <% end %>
       </div>
 
-      <form class="chat-compose" action="#" method="get">
-        <div class="chat-compose-shell">
-          <input type="text" class="form-input chat-compose-input" placeholder="Type a message to your friend" />
-          <button type="button" class="button button-primary">Send</button>
-        </div>
-      </form>
+      <% if @selected_conversation %>
+        <%= form_with url: create_message_chats_path, method: :post, class: "chat-compose" do |form| %>
+          <%= hidden_field_tag :conversation_id, @selected_conversation.id %>
+          <div class="chat-compose-shell">
+            <%= form.text_field :body, class: "form-input chat-compose-input", placeholder: "Type a message to your friend" %>
+            <%= form.submit "Send", class: "button button-primary" %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
 
     <div class="chat-card">
@@ -92,3 +198,4 @@
     </div>
   </section>
 </main>
+            <div class="chat-room-members-head">Room members</div>
