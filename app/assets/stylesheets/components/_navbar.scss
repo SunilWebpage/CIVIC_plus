@@ -87,6 +87,12 @@
   gap: 16px;
 }
 
+.site-nav-actions-logged-in {
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
 .site-user-block,
 .site-logout-block {
   display: flex;
@@ -150,6 +156,11 @@
 
   .site-nav-actions {
     margin-left: auto;
+  }
+
+  .site-nav-actions-logged-in {
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .site-brand-copy small {

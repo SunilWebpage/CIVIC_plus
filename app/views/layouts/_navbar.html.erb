@@ -21,7 +21,7 @@
       <%= link_to "Chat", chats_path, class: "site-nav-link #{'site-nav-link-active' if current_page?(chats_path)}" %>
     </div>
 
-    <div class="site-nav-actions">
+    <div class="site-nav-actions <%= 'site-nav-actions-logged-in' if logged_in? %>">
       <% if logged_in? %>
         <div class="site-user-block">
           <span class="site-user-pill"><%= current_user.email %></span>
