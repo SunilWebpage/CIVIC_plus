@@ -4,6 +4,7 @@
   position: sticky;
   top: 0;
   z-index: 20;
+  padding: 0px 10px 0px 10px;
 }
 
 .site-navbar {
@@ -12,7 +13,7 @@
   justify-content: space-between;
   gap: 18px;
   width: 100%;
-  max-width: 1120px;
+  max-width: auto;
   margin: 0 auto;
   padding: 14px 18px;
   background: rgba(255, 253, 250, 0.9);
@@ -87,12 +88,6 @@
   gap: 16px;
 }
 
-.site-nav-actions-logged-in {
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-}
-
 .site-user-block,
 .site-logout-block {
   display: flex;
@@ -156,11 +151,6 @@
 
   .site-nav-actions {
     margin-left: auto;
-  }
-
-  .site-nav-actions-logged-in {
-    flex-direction: column;
-    align-items: flex-end;
   }
 
   .site-brand-copy small {
