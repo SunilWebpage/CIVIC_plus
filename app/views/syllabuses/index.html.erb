@@ -13,13 +13,13 @@
     <div class="syllabus-highlight-grid">
       <article class="syllabus-highlight-card">
         <span class="syllabus-highlight-label">Quick lookup</span>
-        <strong><%= @syllabus_groups.sum { |group| group[:exams].size } %> exam tracks</strong>
-        <p class="text-note">Start with the exam family you want to prepare for and review the main subjects.</p>
+        <strong><%= @syllabus_groups.values.flatten.size %> syllabus PDFs</strong>
+        <p class="text-note">Open syllabus PDFs by exam category from the admin-managed syllabus library.</p>
       </article>
       <article class="syllabus-highlight-card">
         <span class="syllabus-highlight-label">Coverage</span>
-        <strong>Banking, NEET, JEE, Govt</strong>
-        <p class="text-note">The page is grouped so you can compare syllabuses across similar exams faster.</p>
+        <strong><%= @categories.presence&.join(", ") || "No categories yet" %></strong>
+        <p class="text-note">Each row links directly to a syllabus PDF added by the admin.</p>
       </article>
     </div>
 
@@ -31,35 +31,51 @@
   </section>
 
   <section class="syllabus-group-list">
-    <% @syllabus_groups.each do |group| %>
+    <% @syllabus_groups.each do |category, syllabuses| %>
       <article class="syllabus-group-card">
         <div class="section-heading">
           <div>
-            <span class="eyebrow"><%= group[:title] %></span>
-            <div class="section-title"><%= group[:title] %></div>
+            <span class="eyebrow"><%= category %></span>
+            <div class="section-title"><%= category %></div>
           </div>
-          <div class="section-note text-note"><%= group[:note] %></div>
+          <div class="section-note text-note">Syllabus PDFs available for <%= category %> exams.</div>
         </div>
 
-        <div class="syllabus-exam-grid">
-          <% group[:exams].each do |exam| %>
-            <section class="syllabus-exam-card">
-              <div class="syllabus-exam-title"><%= exam[:name] %></div>
-              <ul class="syllabus-topic-list">
-                <% exam[:syllabus].each do |topic| %>
-                  <li><%= topic %></li>
-                <% end %>
-              </ul>
-            </section>
-          <% end %>
+        <div class="syllabus-table-shell">
+          <table class="syllabus-table">
+            <thead>
+              <tr>
+                <th>Exam</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>PDF</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% syllabuses.each do |syllabus| %>
+                <tr>
+                  <td class="syllabus-exam-name-cell"><%= syllabus.exam_name %></td>
+                  <td><%= syllabus.title %></td>
+                  <td><%= syllabus.description.presence || "-" %></td>
+                  <td>
+                    <% if syllabus.pdf_file.attached? %>
+                      <%= link_to "Open PDF", url_for(syllabus.pdf_file), class: "table-pdf-link", target: "_blank", rel: "noopener" %>
+                    <% else %>
+                      -
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
         </div>
       </article>
     <% end %>
 
     <% if @syllabus_groups.empty? %>
       <article class="syllabus-group-card">
-        <div class="section-title">No syllabus found</div>
-        <p class="text-note">Try another filter to view available exam categories.</p>
+        <div class="section-title">No syllabus PDFs found</div>
+        <p class="text-note">Add syllabus entries from the admin library page to show them here.</p>
       </article>
     <% end %>
   </section>

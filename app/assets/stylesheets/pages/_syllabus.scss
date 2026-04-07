@@ -17,8 +17,7 @@
     linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(247, 249, 243, 0.96));
 }
 
-.syllabus-highlight-grid,
-.syllabus-exam-grid {
+.syllabus-highlight-grid {
   display: grid;
   gap: 18px;
 }
@@ -39,16 +38,52 @@
   gap: 24px;
 }
 
-.syllabus-exam-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.syllabus-highlight-card,
-.syllabus-exam-card {
+.syllabus-highlight-card {
   padding: 22px;
   border-radius: vars.$radius-md;
   border: 1px solid rgba(197, 205, 191, 0.9);
   background: rgba(255, 255, 255, 0.8);
+}
+
+.syllabus-table-shell {
+  overflow-x: auto;
+  border: 1px solid rgba(197, 205, 191, 0.9);
+  border-radius: vars.$radius-md;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.syllabus-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.syllabus-table th,
+.syllabus-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(205, 214, 200, 0.85);
+  text-align: left;
+  vertical-align: top;
+}
+
+.syllabus-table th {
+  background: rgba(221, 232, 223, 0.72);
+  color: var(--accent-dark);
+  font-size: 0.94rem;
+}
+
+.syllabus-table td {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.syllabus-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.syllabus-exam-name-cell {
+  min-width: 210px;
+  color: var(--text);
+  font-weight: 700;
 }
 
 .syllabus-filter-chip {
@@ -84,18 +119,11 @@
   text-transform: uppercase;
 }
 
-.syllabus-exam-title {
-  margin-bottom: 14px;
-  color: var(--text);
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-
 .syllabus-topic-list {
   margin: 0;
   padding-left: 18px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
   color: var(--muted);
 }
 
@@ -116,8 +144,7 @@
     padding: 22px;
   }
 
-  .syllabus-highlight-grid,
-  .syllabus-exam-grid {
+  .syllabus-highlight-grid {
     grid-template-columns: 1fr;
   }
 

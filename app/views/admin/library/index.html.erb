@@ -91,6 +91,53 @@
         <%= form.submit "Add question paper PDF", class: "button button-primary auth-submit" %>
       <% end %>
     </div>
+
+    <div class="admin-card">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Admin</span>
+          <div class="page-title">Add Syllabus PDF</div>
+        </div>
+      </div>
+
+      <% if @syllabus.errors.any? %>
+        <div class="auth-errors">
+          <% @syllabus.errors.full_messages.each do |message| %>
+            <p><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= form_with model: @syllabus, url: create_syllabus_admin_library_index_path, class: "admin-form" do |form| %>
+        <div class="form-group">
+          <%= form.label :category %>
+          <%= form.text_field :category, class: "form-input", placeholder: "Banking / NEET / JEE / UPSC" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :exam_name, "Exam name" %>
+          <%= form.text_field :exam_name, class: "form-input", placeholder: "IBPS PO / Clerk" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :title %>
+          <%= form.text_field :title, class: "form-input", placeholder: "IBPS PO Full Syllabus PDF" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :description %>
+          <%= form.text_area :description, class: "form-input", rows: 4, placeholder: "Short description for this syllabus PDF" %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :pdf_file, "PDF file" %>
+          
+          <%= form.file_field :pdf_file, class: "form-input", accept: "application/pdf" %>
+        </div>
+
+        <%= form.submit "Add syllabus PDF", class: "button button-primary auth-submit" %>
+      <% end %>
+    </div>
   </section>
 
   <section class="admin-list-card">
@@ -158,6 +205,46 @@
               <td>
                 <% if (paper_href = safe_href(paper.pdf_url)) %>
                   <%= link_to "Open PDF", paper_href, class: "table-pdf-link", target: external_href?(paper_href) ? "_blank" : nil, rel: external_href?(paper_href) ? "noopener" : nil %>
+                <% else %>
+                  -
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="admin-list-card">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Syllabuses</span>
+        <div class="section-title">Current syllabus entries</div>
+      </div>
+    </div>
+
+    <div class="books-table-shell">
+      <table class="books-table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Exam</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>PDF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @syllabuses.each do |syllabus| %>
+            <tr>
+              <td><%= syllabus.category %></td>
+              <td><%= syllabus.exam_name %></td>
+              <td><%= syllabus.title %></td>
+              <td><%= syllabus.description.presence || "-" %></td>
+              <td>
+                <% if syllabus.pdf_file.attached? %>
+                  <%= link_to "Open PDF", url_for(syllabus.pdf_file), class: "table-pdf-link " , target: "_blank", rel: "noopener" %>
                 <% else %>
                   -
                 <% end %>

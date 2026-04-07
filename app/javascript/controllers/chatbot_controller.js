@@ -1,9 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  static values = { endpoint: String }
   static targets = ["input", "messages"]
 
-  ask(event) {
+  async ask(event) {
     event.preventDefault()
 
     const question = this.inputTarget.value.trim()
@@ -11,10 +12,35 @@ export default class extends Controller {
 
     this.appendMessage("You", question, true)
     this.inputTarget.value = ""
+    this.setInputDisabled(true)
+    this.appendMessage("Study Bot", "Thinking...", false, true)
 
-    const answer = this.buildAnswer(question)
-    this.appendMessage("Study Bot", answer, false)
-    this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
+    try {
+      const response = await fetch(this.endpointValue, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content,
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ question })
+      })
+
+      const payload = await response.json()
+      this.removePendingMessage()
+
+      if (!response.ok) {
+        this.appendMessage("Study Bot", payload.error || "Unable to get a response right now.", false)
+      } else {
+        this.appendMessage("Study Bot", payload.answer, false)
+      }
+    } catch (_error) {
+      this.removePendingMessage()
+      this.appendMessage("Study Bot", "Network error. Please try again.", false)
+    } finally {
+      this.setInputDisabled(false)
+      this.messagesTarget.scrollTop = this.messagesTarget.scrollHeight
+    }
   }
 
   useSuggestion(event) {
@@ -22,9 +48,10 @@ export default class extends Controller {
     this.inputTarget.focus()
   }
 
-  appendMessage(sender, text, own) {
+  appendMessage(sender, text, own, pending = false) {
     const message = document.createElement("article")
     message.className = `bot-message ${own ? "bot-message-own" : ""}`.trim()
+    if (pending) message.dataset.pending = "true"
 
     const senderNode = document.createElement("div")
     senderNode.className = "bot-message-name"
@@ -38,29 +65,12 @@ export default class extends Controller {
     this.messagesTarget.append(message)
   }
 
-  buildAnswer(question) {
-    const lower = question.toLowerCase()
+  removePendingMessage() {
+    this.messagesTarget.querySelector("[data-pending='true']")?.remove()
+  }
 
-    if (lower.includes("math")) {
-      return "For critical maths questions: 1. Write the given values. 2. Identify the formula. 3. Substitute carefully. 4. Solve line by line. 5. Recheck units and signs before the final answer."
-    }
-
-    if (lower.includes("science")) {
-      return "For science answers: start with the definition, then explain the process in 2 to 4 simple points, add one example, and end with the result or application."
-    }
-
-    if (lower.includes("social")) {
-      return "For social science critical questions: answer in order using introduction, main points with dates/names, and a short conclusion. Keep each point separate so it is easy to score."
-    }
-
-    if (lower.includes("tamil")) {
-      return "For Tamil preparation: read the lesson once, mark important lines, practice book back questions, and write short answers from memory twice for retention."
-    }
-
-    if (lower.includes("critical") || lower.includes("hard") || lower.includes("difficult")) {
-      return "For critical questions, break the problem into three parts: what is asked, what facts are already known, and what method should be used. Then solve each part one by one instead of trying to answer in one jump."
-    }
-
-    return "I can help with study questions, difficult problems, answer formats, revision steps, and exam preparation. Ask me subject-wise and I will guide you with a simple solution method."
+  setInputDisabled(disabled) {
+    this.inputTarget.disabled = disabled
+    this.element.querySelector("button[type='submit']").disabled = disabled
   }
 }

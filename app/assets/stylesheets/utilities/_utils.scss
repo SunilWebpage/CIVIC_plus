@@ -44,7 +44,7 @@
   text-align: left;
 }
 
-.section-heading > * {
+.section-heading>* {
   width: 100%;
   margin-left: 0;
   margin-right: 0;
@@ -70,4 +70,8 @@
 .flex-col {
 
   flex-direction: column;
+}
+
+.d-none {
+  display: none;
 }

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       collection do
         post :create_book
         post :create_question_paper
+        post :create_syllabus
       end
     end
   end
@@ -25,7 +26,11 @@ Rails.application.routes.draw do
       get :export
     end
   end
-  resources :bots, only: [ :index ]
+  resources :bots, only: [ :index ] do
+    collection do
+      post :ask
+    end
+  end
   resources :chats, only: [ :index ]
   resources :books, only: [ :index ]
   resources :syllabuses, only: [ :index ]
