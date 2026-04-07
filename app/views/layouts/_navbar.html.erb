@@ -23,8 +23,12 @@
 
     <div class="site-nav-actions">
       <% if logged_in? %>
-        <span class="site-user-pill"><%= current_user.email %></span>
-        <%= button_to "Logout", logout_path, method: :delete, class: "site-nav-button site-nav-button-secondary" %>
+        <div class="site-user-block">
+          <span class="site-user-pill"><%= current_user.email %></span>
+        </div>
+        <div class="site-logout-block">
+          <%= button_to "Logout", logout_path, method: :delete, class: "site-nav-button site-nav-button-secondary", form: { class: "site-logout-form" } %>
+        </div>
       <% else %>
         <%= link_to "Login", login_path, class: "site-nav-link" %>
         <%= link_to "Sign Up", signup_path, class: "site-nav-button" %>

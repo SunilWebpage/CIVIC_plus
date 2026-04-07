@@ -84,7 +84,17 @@
 .site-nav-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
+}
+
+.site-user-block,
+.site-logout-block {
+  display: flex;
+  align-items: center;
+}
+
+.site-logout-form {
+  margin: 0;
 }
 
 .site-nav-button {
@@ -111,12 +121,13 @@
   display: inline-flex;
   align-items: center;
   min-height: 40px;
-  padding: 0 12px;
+  padding: 0 14px;
   border-radius: 999px;
   background: var(--accent-soft);
   color: var(--accent-dark);
   font-size: 0.9rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 @include mobile {
