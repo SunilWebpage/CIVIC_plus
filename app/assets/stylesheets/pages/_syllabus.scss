@@ -1,0 +1,93 @@
+@use "../abstracts/mixins" as *;
+@use "../abstracts/variables" as vars;
+
+.syllabus-page {
+  @include page-shell;
+  display: grid;
+  gap: 28px;
+}
+
+.syllabus-hero,
+.syllabus-group-card {
+  padding: 30px;
+  border-radius: vars.$radius-lg;
+  border: 1px solid rgba(205, 214, 200, 0.9);
+  background:
+    radial-gradient(circle at top right, rgba(139, 172, 120, 0.12), transparent 32%),
+    linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(247, 249, 243, 0.96));
+}
+
+.syllabus-highlight-grid,
+.syllabus-exam-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.syllabus-highlight-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.syllabus-group-list {
+  display: grid;
+  gap: 24px;
+}
+
+.syllabus-exam-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.syllabus-highlight-card,
+.syllabus-exam-card {
+  padding: 22px;
+  border-radius: vars.$radius-md;
+  border: 1px solid rgba(197, 205, 191, 0.9);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.syllabus-highlight-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--accent-dark);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.syllabus-exam-title {
+  margin-bottom: 14px;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.syllabus-topic-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.syllabus-topic-list li::marker {
+  color: var(--accent-dark);
+}
+
+@include mobile {
+  .syllabus-page {
+    padding-top: 20px;
+    padding-bottom: 36px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .syllabus-hero,
+  .syllabus-group-card {
+    padding: 22px;
+  }
+
+  .syllabus-highlight-grid,
+  .syllabus-exam-grid {
+    grid-template-columns: 1fr;
+  }
+}

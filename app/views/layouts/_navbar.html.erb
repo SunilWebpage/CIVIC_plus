@@ -11,6 +11,7 @@
     <div class="site-nav-links">
       <%= link_to "Home", question_papers_path, class: "site-nav-link #{'site-nav-link-active' if current_page?(question_papers_path)}" %>
       <%= link_to "Library", books_path, class: "site-nav-link #{'site-nav-link-active' if current_page?(books_path)}" %>
+      <%= link_to "Syllabus", syllabuses_path, class: "site-nav-link #{'site-nav-link-active' if current_page?(syllabuses_path)}" %>
       <%= link_to "Practice", exam_practices_path, class: "site-nav-link #{'site-nav-link-active' if controller_name == 'exam_practices' || controller_name == 'answer_sheets'}" %>
       <%= link_to "Bot", bots_path, class: "site-nav-link #{'site-nav-link-active' if current_page?(bots_path)}" %>
       <%= link_to "Categories", "#{root_path}#paper-library", class: "site-nav-link" %>

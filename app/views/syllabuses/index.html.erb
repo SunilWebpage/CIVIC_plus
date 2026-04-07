@@ -1,0 +1,53 @@
+<% content_for :title, "Syllabus" %>
+
+<main class="syllabus-page">
+  <section class="syllabus-hero">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Syllabus</span>
+        <div class="page-title">Exam syllabus by category</div>
+      </div>
+      <div class="section-note text-note">Browse the major topics for banking, medical, engineering, and government exams in one place.</div>
+    </div>
+
+    <div class="syllabus-highlight-grid">
+      <article class="syllabus-highlight-card">
+        <span class="syllabus-highlight-label">Quick lookup</span>
+        <strong><%= @syllabus_groups.sum { |group| group[:exams].size } %> exam tracks</strong>
+        <p class="text-note">Start with the exam family you want to prepare for and review the main subjects.</p>
+      </article>
+      <article class="syllabus-highlight-card">
+        <span class="syllabus-highlight-label">Coverage</span>
+        <strong>Banking, NEET, JEE, Govt</strong>
+        <p class="text-note">The page is grouped so you can compare syllabuses across similar exams faster.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="syllabus-group-list">
+    <% @syllabus_groups.each do |group| %>
+      <article class="syllabus-group-card">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow"><%= group[:title] %></span>
+            <div class="section-title"><%= group[:title] %></div>
+          </div>
+          <div class="section-note text-note"><%= group[:note] %></div>
+        </div>
+
+        <div class="syllabus-exam-grid">
+          <% group[:exams].each do |exam| %>
+            <section class="syllabus-exam-card">
+              <div class="syllabus-exam-title"><%= exam[:name] %></div>
+              <ul class="syllabus-topic-list">
+                <% exam[:syllabus].each do |topic| %>
+                  <li><%= topic %></li>
+                <% end %>
+              </ul>
+            </section>
+          <% end %>
+        </div>
+      </article>
+    <% end %>
+  </section>
+</main>

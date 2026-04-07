@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :bots, only: [ :index ]
   resources :chats, only: [ :index ]
   resources :books, only: [ :index ]
+  resources :syllabuses, only: [ :index ]
   resources :question_papers, only: [ :index, :show ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
