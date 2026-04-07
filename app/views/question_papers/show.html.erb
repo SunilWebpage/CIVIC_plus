@@ -14,9 +14,9 @@
       Use this paper to revise concepts, improve speed, and make your preparation more exam-focused.
     </p>
 
-    <% if @paper.pdf_url.present? %>
+    <% if (paper_href = safe_href(@paper.pdf_url)) %>
       <p>
-        <%= link_to "Open PDF", @paper.pdf_url, class: "text-link", target: "_blank", rel: "noopener" %>
+        <%= link_to "Open PDF", paper_href, class: "text-link", target: external_href?(paper_href) ? "_blank" : nil, rel: external_href?(paper_href) ? "noopener" : nil %>
       </p>
     <% end %>
 

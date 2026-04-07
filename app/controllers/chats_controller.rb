@@ -18,7 +18,7 @@ class ChatsController < ApplicationController
       {
         title: paper.title,
         subtitle: "#{paper.category} • #{paper.year}",
-        url: paper.pdf_url.presence || question_paper_path(paper)
+        url: SafeUrl.normalize(paper.pdf_url) || question_paper_path(paper)
       }
     end
   end

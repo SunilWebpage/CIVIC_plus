@@ -74,7 +74,7 @@
             </div>
 
             <div class="chat-share-actions">
-              <%= link_to "Open", item[:url], class: "text-link", data: { turbo_frame: "_top" }, target: item[:url].start_with?("http") ? "_blank" : nil, rel: item[:url].start_with?("http") ? "noopener" : nil %>
+              <%= link_to "Open", item[:url], class: "text-link", data: { turbo_frame: "_top" }, target: external_href?(item[:url]) ? "_blank" : nil, rel: external_href?(item[:url]) ? "noopener" : nil %>
               <button
                 type="button"
                 class="button button-secondary"

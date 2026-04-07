@@ -118,8 +118,8 @@
               <td><%= book.subject %></td>
               <td><%= book.title %></td>
               <td>
-                <% if book.pdf_url.present? %>
-                  <%= link_to "Open PDF", book.pdf_url, class: "table-pdf-link", target: "_blank", rel: "noopener" %>
+                <% if (book_href = safe_href(book.pdf_url)) %>
+                  <%= link_to "Open PDF", book_href, class: "table-pdf-link", target: external_href?(book_href) ? "_blank" : nil, rel: external_href?(book_href) ? "noopener" : nil %>
                 <% else %>
                   -
                 <% end %>
@@ -156,8 +156,8 @@
               <td><%= paper.year %></td>
               <td><%= paper.title %></td>
               <td>
-                <% if paper.pdf_url.present? %>
-                  <%= link_to "Open PDF", paper.pdf_url, class: "table-pdf-link", target: "_blank", rel: "noopener" %>
+                <% if (paper_href = safe_href(paper.pdf_url)) %>
+                  <%= link_to "Open PDF", paper_href, class: "table-pdf-link", target: external_href?(paper_href) ? "_blank" : nil, rel: external_href?(paper_href) ? "noopener" : nil %>
                 <% else %>
                   -
                 <% end %>
