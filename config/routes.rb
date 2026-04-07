@@ -31,7 +31,16 @@ Rails.application.routes.draw do
       post :ask
     end
   end
-  resources :chats, only: [ :index ]
+  resources :chats, only: [ :index, :create ] do
+    collection do
+      post :create_room
+      post :join_room
+      post :create_message
+      delete :destroy_room
+      delete :destroy_conversation
+      delete :remove_member
+    end
+  end
   resources :books, only: [ :index ]
   resources :syllabuses, only: [ :index ]
   resources :question_papers, only: [ :index, :show ]

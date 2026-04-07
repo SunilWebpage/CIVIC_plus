@@ -1,4 +1,4 @@
-@use "../abstracts/mixins" as *;
+@use "../abstracts/mixins"as *;
 
 .bot-page {
   @include page-shell;
@@ -51,7 +51,7 @@
 .bot-messages {
   display: grid;
   gap: 12px;
-  min-height: 320px;
+
   max-height: 520px;
   overflow-y: auto;
   padding: 18px;
