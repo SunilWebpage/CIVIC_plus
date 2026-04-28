@@ -22,7 +22,7 @@
             </p>
 
             <div class="paper-card-footer">
-              <% if (paper_href = safe_href(paper.pdf_url)) %>
+              <% if (paper_href = pdf_href_for(paper)) %>
                 <%= link_to "Open PDF", paper_href, class: "text-link", target: external_href?(paper_href) ? "_blank" : nil, rel: external_href?(paper_href) ? "noopener" : nil, data: { turbo_frame: "_top" } %>
               <% else %>
                 <%= link_to "View paper", books_path, class: "text-link", data: { turbo_frame: "_top" } %>

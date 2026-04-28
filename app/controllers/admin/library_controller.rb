@@ -67,11 +67,11 @@ module Admin
     private
 
     def book_params
-      params.require(:book).permit(:title, :standard, :subject, :pdf_url)
+      params.require(:book).permit(:title, :standard, :subject, :pdf_file)
     end
 
     def question_paper_params
-      params.require(:question_paper).permit(:title, :category, :year, :is_premium, :pdf_url)
+      params.require(:question_paper).permit(:title, :category, :year, :is_premium, :pdf_file)
     end
 
     def syllabus_params

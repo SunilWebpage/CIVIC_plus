@@ -34,10 +34,13 @@
           <%= form.select :subject, Book::SUBJECTS, {}, class: "form-input" %>
         </div>
 
-        <div class="form-group">
-          <%= form.label :pdf_url, "PDF path or URL" %>
-          <%= form.text_field :pdf_url, class: "form-input", placeholder: "/pdfs/class-6-tamil-book.pdf" %>
-        </div>
+        <lable for="pdf_file"  class="form-group">
+          <%= form.label :pdf_file, "Click To Add File" %>
+
+          <%= form.file_field :pdf_file, class: "", accept: "application/pdf",style:"display:none" %>
+         
+      
+        </lable>
 
         <%= form.submit "Add book PDF", class: "button button-primary auth-submit" %>
       <% end %>
@@ -84,8 +87,8 @@
         </div>
 
         <div class="form-group">
-          <%= form.label :pdf_url, "PDF path or URL" %>
-          <%= form.text_field :pdf_url, class: "form-input", placeholder: "/pdfs/class-6-tamil-book-back.pdf" %>
+          <%= form.label :pdf_file, "PDF file" %>
+          <%= form.file_field :pdf_file, class: "form-input", accept: "application/pdf" %>
         </div>
 
         <%= form.submit "Add question paper PDF", class: "button button-primary auth-submit" %>
@@ -165,7 +168,7 @@
               <td><%= book.subject %></td>
               <td><%= book.title %></td>
               <td>
-                <% if (book_href = safe_href(book.pdf_url)) %>
+                <% if (book_href = pdf_href_for(book)) %>
                   <%= link_to "Open PDF", book_href, class: "table-pdf-link", target: external_href?(book_href) ? "_blank" : nil, rel: external_href?(book_href) ? "noopener" : nil %>
                 <% else %>
                   -
@@ -203,7 +206,7 @@
               <td><%= paper.year %></td>
               <td><%= paper.title %></td>
               <td>
-                <% if (paper_href = safe_href(paper.pdf_url)) %>
+                <% if (paper_href = pdf_href_for(paper)) %>
                   <%= link_to "Open PDF", paper_href, class: "table-pdf-link", target: external_href?(paper_href) ? "_blank" : nil, rel: external_href?(paper_href) ? "noopener" : nil %>
                 <% else %>
                   -
@@ -243,8 +246,8 @@
               <td><%= syllabus.title %></td>
               <td><%= syllabus.description.presence || "-" %></td>
               <td>
-                <% if syllabus.pdf_file.attached? %>
-                  <%= link_to "Open PDF", url_for(syllabus.pdf_file), class: "table-pdf-link " , target: "_blank", rel: "noopener" %>
+                <% if (syllabus_href = pdf_href_for(syllabus)) %>
+                  <%= link_to "Open PDF", syllabus_href, class: "table-pdf-link ", target: "_blank", rel: "noopener" %>
                 <% else %>
                   -
                 <% end %>

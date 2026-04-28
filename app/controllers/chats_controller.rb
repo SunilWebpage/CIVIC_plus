@@ -26,7 +26,7 @@ class ChatsController < ApplicationController
       {
         title: paper.title,
         subtitle: "#{paper.category} • #{paper.year}",
-        url: SafeUrl.normalize(paper.pdf_url) || question_paper_path(paper)
+        url: paper.pdf_file.attached? ? url_for(paper.pdf_file) : SafeUrl.normalize(paper.pdf_url) || question_paper_path(paper)
       }
     end
   end
@@ -127,7 +127,7 @@ class ChatsController < ApplicationController
       {
         title: paper.title,
         subtitle: "#{paper.category} • #{paper.year}",
-        url: SafeUrl.normalize(paper.pdf_url) || question_paper_path(paper)
+        url: paper.pdf_file.attached? ? url_for(paper.pdf_file) : SafeUrl.normalize(paper.pdf_url) || question_paper_path(paper)
       }
     end
   end

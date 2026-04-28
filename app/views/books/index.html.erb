@@ -28,7 +28,7 @@
               <% @subjects.each do |subject| %>
                 <% book = books[subject] %>
                 <td>
-                  <% if book && (book_href = safe_href(book.pdf_url)) %>
+                  <% if book && (book_href = pdf_href_for(book)) %>
                     <%= link_to book.title, book_href, class: "table-pdf-link", target: external_href?(book_href) ? "_blank" : nil, rel: external_href?(book_href) ? "noopener" : nil %>
                   <% else %>
                     <%= book&.title || "-" %>
